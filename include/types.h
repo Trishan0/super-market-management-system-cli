@@ -1,12 +1,20 @@
 #ifndef TYPES_H
 #define TYPES_H
-
-#define MAX_PRODUCTS 200
-#define MAX_SALES 200
-#define MAX_QUEUE 100
-#define MAX_STACK 100
 #define NAME_LEN 50
-#define DESC_LEN 100
+
+#define MAX_STACK 100
+
+typedef struct {
+    int productId;
+    char productName[NAME_LEN];
+    float price;
+    int qty;
+} BillItem;
+
+typedef struct {
+    BillItem items[MAX_STACK];
+    int top;
+} BillStack;
 
 typedef struct Promo {
     int id;

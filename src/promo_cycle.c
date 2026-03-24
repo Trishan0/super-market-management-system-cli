@@ -81,3 +81,47 @@ void displayNextPromo(void) {
     printf("  | Title        | %-44s |\n", current->title);
     printf("  +--------------+----------------------------------------------+\n");
 }
+
+void displayAllPromos(void) {
+    if (last == NULL) {
+        printf("\n  [!] No promos available.\n");
+        return;
+    }
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------------+\n");
+    printf("  |                    PROMOTIONAL BANNER TABLE                       |\n");
+    printf("  +----------+--------------------------------------------------------+\n");
+    printf("  | Promo ID | Title                                                  |\n");
+    printf("  +----------+--------------------------------------------------------+\n");
+
+    Promo* cur = last->next;
+    do {
+        printf("  | %-8d | %-54s |\n",
+               cur->id,
+               cur->title);
+        cur = cur->next;
+    } while (cur != last->next);
+
+    printf("  +----------+--------------------------------------------------------+\n");
+}
+
+void searchPromo(void) {
+    int id;
+    printf("Enter promo id to search: ");
+    scanf("%d", &id);
+
+    Promo* promo = findPromoById(id, NULL);
+    if (promo == NULL) {
+        printf("\n  [!] Promo not found.\n");
+        return;
+    }
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------+\n");
+    printf("  |                    PROMO SEARCH RESULT                      |\n");
+    printf("  +--------------+----------------------------------------------+\n");
+    printf("  | Promo ID     | %-44d |\n", promo->id);
+    printf("  | Title        | %-44s |\n", promo->title);
+    printf("  +--------------+----------------------------------------------+\n");
+}

@@ -60,3 +60,24 @@ void addPromo(void) {
 
     printf("Promo added successfully.\n");
 }
+
+void displayNextPromo(void) {
+    if (last == NULL) {
+        printf("\n  [!] No promos available.\n");
+        return;
+    }
+
+    if (current == NULL) {
+        current = last->next;
+    } else {
+        current = current->next;
+    }
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------+\n");
+    printf("  |                     NEXT ACTIVE PROMO                       |\n");
+    printf("  +--------------+----------------------------------------------+\n");
+    printf("  | Promo ID     | %-44d |\n", current->id);
+    printf("  | Title        | %-44s |\n", current->title);
+    printf("  +--------------+----------------------------------------------+\n");
+}

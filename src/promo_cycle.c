@@ -125,3 +125,19 @@ void searchPromo(void) {
     printf("  | Title        | %-44s |\n", promo->title);
     printf("  +--------------+----------------------------------------------+\n");
 }
+
+void updatePromo(void) {
+    int id;
+    printf("Enter promo id to update: ");
+    scanf("%d", &id);
+
+    Promo* promo = findPromoById(id, NULL);
+    if (promo == NULL) {
+        printf("Promo not found.\n");
+        return;
+    }
+
+    printf("Enter new promo title: ");
+    scanf(" %99[^\n]", promo->title);
+    printf("Promo updated successfully.\n");
+}

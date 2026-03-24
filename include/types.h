@@ -16,4 +16,8 @@ typedef struct {
     int top;
 } BillStack;
 
-#endif
+typedef struct Promo {
+    int id;
+    char title[DESC_LEN];
+    struct Promo* next;
+} Promo;

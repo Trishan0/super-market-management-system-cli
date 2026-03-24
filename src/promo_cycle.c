@@ -28,3 +28,35 @@ static Promo* findPromoById(int id, Promo** previous) {
     if (previous != NULL) *previous = NULL;
     return NULL;
 }
+
+void addPromo(void) {
+    Promo* node = (Promo*)malloc(sizeof(Promo));
+    if (node == NULL) {
+        printf("Memory allocation failed.\n");
+        return;
+    }
+
+    printf("Enter promo id: ");
+    scanf("%d", &node->id);
+
+    if (findPromoById(node->id, NULL) != NULL) {
+        printf("Promo with this ID already exists.\n");
+        free(node);
+        return;
+    }
+
+    printf("Enter promo title: ");
+    scanf(" %99[^\n]", node->title);
+
+    if (last == NULL) {
+        last = node;
+        node->next = node;
+        current = node;
+    } else {
+        node->next = last->next;
+        last->next = node;
+        last = node;
+    }
+
+    printf("Promo added successfully.\n");
+}

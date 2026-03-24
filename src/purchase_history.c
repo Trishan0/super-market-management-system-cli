@@ -70,3 +70,170 @@ void searchPurchaseRecord(void) {
     printf("  | Amount       | %-44.2f |\n", p->amount);
     printf("  +--------------+----------------------------------------------+\n");
 }
+
+
+void updatePurchaseRecord(void) {
+    int recordId;
+    printf("Enter record id to update: ");
+    scanf("%d", &recordId);
+
+    Purchase* p = findPurchaseByRecordId(recordId);
+    if (p == NULL) {
+        printf("Purchase record not found.\n");
+        return;
+    }
+
+    printf("Enter new customer name: ");
+    scanf(" %49[^\n]", p->customerName);
+    printf("Enter new amount: ");
+    scanf("%f", &p->amount);
+    printf("Purchase record updated successfully.\n");
+}
+
+void deletePurchaseRecord(void) {
+    int recordId;
+    printf("Enter record id to delete: ");
+    scanf("%d", &recordId);
+
+    Purchase* node = findPurchaseByRecordId(recordId);
+    if (node == NULL) {
+        printf("Purchase record not found.\n");
+        return;
+    }
+
+    if (node->prev != NULL) node->prev->next = node->next;
+    else head = node->next;
+
+    if (node->next != NULL) node->next->prev = node->prev;
+    else tail = node->prev;
+
+    free(node);
+    printf("Purchase record deleted successfully.\n");
+}
+
+void traversePurchasesForward(void) {
+    if (head == NULL) {
+        printf("\n  [!] No purchase records available.\n");
+        return;
+    }
+
+    printf("\n");
+    printf("  +-----------------------------------------------------------------------------------+\n");
+    printf("  |                    CUSTOMER PURCHASE HISTORY TABLE (FORWARD)                      |\n");
+    printf("  +----------+------------+--------------------------+-------------------------------+\n");
+    printf("  | RecordID | CustomerID | Customer Name            | Amount                        |\n");
+    printf("  +----------+------------+--------------------------+-------------------------------+\n");
+
+    Purchase* cur = head;
+    while (cur != NULL) {
+        printf("  | %-8d | %-10d | %-24s | %-29.2f |\n",
+               cur->recordId,
+               cur->customerId,
+               cur->customerName,
+               cur->amount);
+        cur = cur->next;
+    }
+
+    printf("  +----------+------------+--------------------------+-------------------------------+\n");
+}
+
+void traversePurchasesBackward(void) {
+    if (tail == NULL) {
+        printf("\n  [!] No purchase records available.\n");
+        return;
+    }
+
+    printf("\n");
+    printf("  +-----------------------------------------------------------------------------------+\n");
+    printf("  |                   CUSTOMER PURCHASE HISTORY TABLE (BACKWARD)                      |\n");
+    printf("  +----------+------------+--------------------------+-------------------------------+\n");
+    printf("  | RecordID | CustomerID | Customer Name            | Amount                        |\n");
+    printf("  +----------+------------+--------------------------+-------------------------------+\n");
+
+    Purchase* cur = tail;
+    while (cur != NULL) {
+        printf("  | %-8d | %-10d | %-24s | %-29.2f |\n",
+               cur->recordId,
+               cur->customerId,
+               cur->customerName,
+               cur->amount);
+        cur = cur->prev;
+    }
+
+    printf("  +----------+------------+--------------------------+-------------------------------+\n");
+}
+void totalPurchasesByCustomer(void) {
+    int customerId;
+    float total = 0.0f;
+    int found = 0;
+
+    printf("Enter customer id: ");
+    scanf("%d", &customerId);
+
+    Purchase* cur = head;
+    while (cur != NULL) {
+        if (cur->customerId == customerId) {
+            total += cur->amount;
+            found = 1;
+        }
+        cur = cur->next;
+    }
+
+    if (!found) {
+        printf("No purchase records found for customer ID %d.\n", customerId);
+        return;
+    }
+
+    printf("Total purchases by customer %d: %.2f\n", customerId, total);
+}
+
+void purchaseHistoryMenu(void) {
+    int choice;
+    do {
+        printf("\n=== Customer Purchase History (DLL) ===\n");
+        printf("1. Add purchase record\n");
+        printf("2. Search purchase record\n");
+        printf("3. Update purchase record\n");
+        printf("4. Delete purchase record\n");
+        printf("5. Traverse forward\n");
+        printf("6. Traverse backward\n");
+        printf("7. Total purchases by customer\n");
+        printf("0. Back\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: addPurchaseRecord(); break;
+            case 2: searchPurchaseRecord(); break;
+            case 3: updatePurchaseRecord(); break;
+            case 4: deletePurchaseRecord(); break;
+            case 5: traversePurchasesForward(); break;
+            case 6: traversePurchasesBackward(); break;
+            case 7: totalPurchasesByCustomer(); break;
+            case 0: break;
+            default: printf("Invalid choice.\n");
+        }
+    } while (choice != 0);
+}
+
+static void preloadRecord(int recordId, int customerId, const char* name, float amount) {
+    Purchase* node = (Purchase*)malloc(sizeof(Purchase));
+    if (!node) return;
+    node->recordId = recordId;
+    node->customerId = customerId;
+    strcpy(node->customerName, name);
+    node->amount = amount;
+    node->prev = tail;
+    node->next = NULL;
+    if (tail) tail->next = node;
+    else head = node;
+    tail = node;
+}
+
+__attribute__((constructor))
+static void preloadPurchases(void) {
+    preloadRecord(301, 1, "Nimal", 2450.00f);
+    preloadRecord(302, 2, "Kasuni", 1890.00f);
+    preloadRecord(303, 1, "Nimal", 760.00f);
+    preloadRecord(304, 3, "Tharindu", 3320.00f);
+}

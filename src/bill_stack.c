@@ -92,3 +92,16 @@ void displayCurrentBillStack(void) {
 
     printf("  +------------+--------------------------+------------+--------------+\n");
 }
+void currentBillTotal(void) {
+    float total = 0.0f;
+    for (int i = 0; i <= bill.top; i++) {
+        total += bill.items[i].price * bill.items[i].qty;
+    }
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------+\n");
+    printf("  |                    CURRENT BILL SUMMARY                     |\n");
+    printf("  +--------------+----------------------------------------------+\n");
+    printf("  | Total Amount | %-44.2f |\n", total);
+    printf("  +--------------+----------------------------------------------+\n");
+}

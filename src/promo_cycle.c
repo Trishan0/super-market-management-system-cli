@@ -184,3 +184,58 @@ void countActivePromos(void) {
 
     printf("Active promos: %d\n", count);
 }
+
+
+void promoCycleMenu(void) {
+    int choice;
+    do {
+        printf("\n=== Promotional Banner Rotation (CLL) ===\n");
+        printf("1. Add promo\n");
+        printf("2. Display next promo\n");
+        printf("3. Search promo\n");
+        printf("4. Update promo\n");
+        printf("5. Delete promo\n");
+        printf("6. Count active promos\n");
+        printf("7. Display all promos\n");
+        printf("0. Back\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: addPromo(); break;
+            case 2: displayNextPromo(); break;
+            case 3: searchPromo(); break;
+            case 4: updatePromo(); break;
+            case 5: deletePromo(); break;
+            case 6: countActivePromos(); break;
+            case 7: displayAllPromos(); break;
+            case 0: break;
+            default: printf("Invalid choice.\n");
+        }
+    } while (choice != 0);
+}
+
+static void preloadPromo(int id, const char* title) {
+    Promo* node = (Promo*)malloc(sizeof(Promo));
+    if (!node) return;
+    node->id = id;
+    strcpy(node->title, title);
+    if (last == NULL) {
+        last = node;
+        node->next = node;
+        current = node;
+    } else {
+        node->next = last->next;
+        last->next = node;
+        last = node;
+    }
+}
+
+__attribute__((constructor))
+static void preloadPromos(void) {
+    preloadPromo(401, "Buy 1 Get 1 Free - Soap");
+    preloadPromo(402, "Weekend Discount - Rice");
+    preloadPromo(403, "Tea Pack 10 Percent Off");
+}
+
+

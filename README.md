@@ -12,7 +12,7 @@ A CLI-based supermarket management system built in **C**, implementing **7 data 
 | Achintha  | Supplier Management | Singly Linked List | — |
 | Kaveesha | Customer Purchase History | Doubly Linked List | — |
 | Dinuka | Restocking Request Queue | Queue | — |
-| Ravindu | Checkout Bill (Undo Scan) | Stack | — |
+| Ravindu | Current Bill Operations | Stack | — |
 | Dulmina | Promotional Banner Rotation | Circular Linked List | — |
 | Neandu | Sales Reports | Array | Bubble Sort |
 
@@ -113,7 +113,7 @@ gcc -Wall -Wextra -std=c11 main.c src/product.c src/supplier.c src/purchase_hist
 2. Supplier Management       (SLL)
 3. Customer Purchase History (DLL)
 4. Restocking Request Queue  (Queue)
-5. Undo Last Item in Bill    (Stack)
+5. Current Bill Operations   (Stack)
 6. Promotional Banner        (CLL)
 7. Sales Reports             (Array)
 8. Show Demo Guide

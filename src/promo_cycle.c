@@ -141,3 +141,30 @@ void updatePromo(void) {
     scanf(" %99[^\n]", promo->title);
     printf("Promo updated successfully.\n");
 }
+
+void deletePromo(void) {
+    int id;
+    printf("Enter promo id to delete: ");
+    scanf("%d", &id);
+
+    Promo* prev = NULL;
+    Promo* node = findPromoById(id, &prev);
+
+    if (node == NULL) {
+        printf("Promo not found.\n");
+        return;
+    }
+
+    if (node == last && node == last->next) {
+        free(node);
+        last = NULL;
+        current = NULL;
+    } else {
+        prev->next = node->next;
+        if (node == last) last = prev;
+        if (current == node) current = node->next;
+        free(node);
+    }
+
+    printf("Promo deleted successfully.\n");
+}

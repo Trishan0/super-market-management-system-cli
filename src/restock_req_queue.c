@@ -69,6 +69,7 @@ void frontRestockRequest(void) {
     printf("  | Request Qty  | %-44d |\n", r.requestedQty);
     printf("  +--------------+----------------------------------------------+\n");
 }
+
 void displayRestockRequests(void) {
     if (isQueueEmpty()) {
         printf("\n  [!] No pending restock requests.\n");
@@ -90,4 +91,81 @@ void displayRestockRequests(void) {
     }
 
     printf("  +------------+--------------------------+---------------------------+\n");
+}
+
+void searchRestockRequest(void) {
+    if (isQueueEmpty()) {
+        printf("\n  [!] No pending restock requests.\n");
+        return;
+    }
+
+    int productId;
+    printf("Enter product id to search: ");
+    scanf("%d", &productId);
+
+    for (int i = restockQueue.front; i <= restockQueue.rear; i++) {
+        if (restockQueue.items[i].productId == productId) {
+            printf("\n");
+            printf("  +-------------------------------------------------------------+\n");
+            printf("  |                RESTOCK REQUEST SEARCH RESULT                |\n");
+            printf("  +--------------+----------------------------------------------+\n");
+            printf("  | Product ID   | %-44d |\n", restockQueue.items[i].productId);
+            printf("  | Product Name | %-44s |\n", restockQueue.items[i].productName);
+            printf("  | Request Qty  | %-44d |\n", restockQueue.items[i].requestedQty);
+            printf("  +--------------+----------------------------------------------+\n");
+            return;
+        }
+    }
+
+    printf("\n  [!] Restock request not found.\n");
+}
+void countPendingRestockRequests(void) {
+    if (isQueueEmpty()) {
+        printf("Pending restock requests: 0\n");
+        return;
+    }
+
+    printf("Pending restock requests: %d\n", restockQueue.rear - restockQueue.front + 1);
+}
+
+void totalRequestedQuantity(void) {
+    if (isQueueEmpty()) {
+        printf("Total requested quantity: 0\n");
+        return;
+    }
+
+    int total = 0;
+    for (int i = restockQueue.front; i <= restockQueue.rear; i++) {
+        total += restockQueue.items[i].requestedQty;
+    }
+    printf("Total requested quantity: %d\n", total);
+}
+
+void restockQueueMenu(void) {
+    int choice;
+    do {
+        printf("\n=== Restocking Request Management (Queue) ===\n");
+        printf("1. Enqueue restock request\n");
+        printf("2. Dequeue next request\n");
+        printf("3. View front request\n");
+        printf("4. Display pending requests\n");
+        printf("5. Search request by product ID\n");
+        printf("6. Count pending requests\n");
+        printf("7. Total requested quantity\n");
+        printf("0. Back\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: enqueueRestockRequest(); break;
+            case 2: dequeueRestockRequest(); break;
+            case 3: frontRestockRequest(); break;
+            case 4: displayRestockRequests(); break;
+            case 5: searchRestockRequest(); break;
+            case 6: countPendingRestockRequests(); break;
+            case 7: totalRequestedQuantity(); break;
+            case 0: break;
+            default: printf("Invalid choice.\n");
+        }
+    } while (choice != 0);
 }

@@ -214,3 +214,28 @@ void promoCycleMenu(void) {
         }
     } while (choice != 0);
 }
+
+static void preloadPromo(int id, const char* title) {
+    Promo* node = (Promo*)malloc(sizeof(Promo));
+    if (!node) return;
+    node->id = id;
+    strcpy(node->title, title);
+    if (last == NULL) {
+        last = node;
+        node->next = node;
+        current = node;
+    } else {
+        node->next = last->next;
+        last->next = node;
+        last = node;
+    }
+}
+
+__attribute__((constructor))
+static void preloadPromos(void) {
+    preloadPromo(401, "Buy 1 Get 1 Free - Soap");
+    preloadPromo(402, "Weekend Discount - Rice");
+    preloadPromo(403, "Tea Pack 10 Percent Off");
+}
+
+

@@ -40,3 +40,32 @@ void pushScannedItem(void) {
     bill.items[bill.top] = item;
     printf("Item pushed to current bill.\n");
 }
+void popLastItem(void) {
+    if (isStackEmpty()) {
+        printf("Bill stack is empty.\n");
+        return;
+    }
+
+    BillItem item = bill.items[bill.top--];
+    printf("Last item removed: ID=%d | Name=%s | Price=%.2f | Qty=%d\n",
+           item.productId, item.productName, item.price, item.qty);
+}
+
+void peekLatestItem(void) {
+    if (isStackEmpty()) {
+        printf("\n  [!] Bill stack is empty.\n");
+        return;
+    }
+
+    BillItem item = bill.items[bill.top];
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------+\n");
+    printf("  |                    LATEST BILL ITEM                         |\n");
+    printf("  +--------------+----------------------------------------------+\n");
+    printf("  | Product ID   | %-44d |\n", item.productId);
+    printf("  | Product Name | %-44s |\n", item.productName);
+    printf("  | Price        | %-44.2f |\n", item.price);
+    printf("  | Quantity     | %-44d |\n", item.qty);
+    printf("  +--------------+----------------------------------------------+\n");
+}

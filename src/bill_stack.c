@@ -105,3 +105,27 @@ void currentBillTotal(void) {
     printf("  | Total Amount | %-44.2f |\n", total);
     printf("  +--------------+----------------------------------------------+\n");
 }
+void billStackMenu(void) {
+    int choice;
+    do {
+        printf("\n===  Current Bill Operations (Stack) ===\n");
+        printf("1. Add scanned item  (Push) \n");
+        printf("2. Remove last item (Pop)\n");
+        printf("3. View latest item (Peek)\n");
+        printf("4. Display current bill stack\n");
+        printf("5. Current bill total\n");
+        printf("0. Back\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: pushScannedItem(); break;
+            case 2: popLastItem(); break;
+            case 3: peekLatestItem(); break;
+            case 4: displayCurrentBillStack(); break;
+            case 5: currentBillTotal(); break;
+            case 0: break;
+            default: printf("Invalid choice.\n");
+        }
+    } while (choice != 0);
+}

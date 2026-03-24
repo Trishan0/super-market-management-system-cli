@@ -40,3 +40,32 @@ void enqueueRestockRequest(void) {
     restockQueue.items[restockQueue.rear] = r;
     printf("Restock request added successfully.\n");
 }
+
+void dequeueRestockRequest(void) {
+    if (isQueueEmpty()) {
+        printf("No pending restock requests.\n");
+        return;
+    }
+
+    RestockRequest r = restockQueue.items[restockQueue.front++];
+    printf("Processed restock request: ID=%d | Name=%s | Qty=%d\n",
+           r.productId, r.productName, r.requestedQty);
+}
+
+void frontRestockRequest(void) {
+    if (isQueueEmpty()) {
+        printf("\n  [!] No pending restock requests.\n");
+        return;
+    }
+
+    RestockRequest r = restockQueue.items[restockQueue.front];
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------+\n");
+    printf("  |                  FRONT RESTOCK REQUEST                      |\n");
+    printf("  +--------------+----------------------------------------------+\n");
+    printf("  | Product ID   | %-44d |\n", r.productId);
+    printf("  | Product Name | %-44s |\n", r.productName);
+    printf("  | Request Qty  | %-44d |\n", r.requestedQty);
+    printf("  +--------------+----------------------------------------------+\n");
+}

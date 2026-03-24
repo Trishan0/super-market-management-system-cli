@@ -168,3 +168,19 @@ void deletePromo(void) {
 
     printf("Promo deleted successfully.\n");
 }
+
+void countActivePromos(void) {
+    if (last == NULL) {
+        printf("Active promos: 0\n");
+        return;
+    }
+
+    int count = 0;
+    Promo* cur = last->next;
+    do {
+        count++;
+        cur = cur->next;
+    } while (cur != last->next);
+
+    printf("Active promos: %d\n", count);
+}

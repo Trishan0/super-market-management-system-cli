@@ -184,3 +184,33 @@ void countActivePromos(void) {
 
     printf("Active promos: %d\n", count);
 }
+
+
+void promoCycleMenu(void) {
+    int choice;
+    do {
+        printf("\n=== Promotional Banner Rotation (CLL) ===\n");
+        printf("1. Add promo\n");
+        printf("2. Display next promo\n");
+        printf("3. Search promo\n");
+        printf("4. Update promo\n");
+        printf("5. Delete promo\n");
+        printf("6. Count active promos\n");
+        printf("7. Display all promos\n");
+        printf("0. Back\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: addPromo(); break;
+            case 2: displayNextPromo(); break;
+            case 3: searchPromo(); break;
+            case 4: updatePromo(); break;
+            case 5: deletePromo(); break;
+            case 6: countActivePromos(); break;
+            case 7: displayAllPromos(); break;
+            case 0: break;
+            default: printf("Invalid choice.\n");
+        }
+    } while (choice != 0);
+}

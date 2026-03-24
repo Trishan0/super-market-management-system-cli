@@ -166,3 +166,53 @@ void highestSaleDay(void) {
     printf("  | Amount       | %-44.2f |\n", sales[maxIndex].amount);
     printf("  +--------------+----------------------------------------------+\n");
 }
+
+void bubbleSortSalesByAmount(void) {
+    for (int i = 0; i < salesCount - 1; i++) {
+        for (int j = 0; j < salesCount - i - 1; j++) {
+            if (sales[j].amount > sales[j + 1].amount) {
+                SaleRecord temp = sales[j];
+                sales[j] = sales[j + 1];
+                sales[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("Sales records sorted by amount using bubble sort.\n");
+    displaySalesRecords();
+}
+
+void salesReportMenu(void) {
+    int choice;
+    do {
+        printf("\n=== Sales Reports (Array) ===\n");
+        printf("1. Add sales record\n");
+        printf("2. Search sales record\n");
+        printf("3. Update sales record\n");
+        printf("4. Delete sales record\n");
+        printf("5. Display sales records\n");
+        printf("6. Sort sales by amount (Bubble Sort)\n");
+        printf("7. Total daily sales\n");
+        printf("8. Average sales\n");
+        printf("9. Highest sale day\n");
+        printf("0. Back\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: addSalesRecord(); break;
+            case 2: searchSalesRecord(); break;
+            case 3: updateSalesRecord(); break;
+            case 4: deleteSalesRecord(); break;
+            case 5: displaySalesRecords(); break;
+            case 6: bubbleSortSalesByAmount(); break;
+            case 7: totalDailySales(); break;
+            case 8: averageSales(); break;
+            case 9: highestSaleDay(); break;
+            case 0: break;
+            default: printf("Invalid choice.\n");
+        }
+    } while (choice != 0);
+}
+
+

@@ -23,4 +23,11 @@ typedef struct Promo {
     struct Promo* next;
 } Promo;
 
-#endif
+typedef struct Purchase {
+    int recordId;
+    int customerId;
+    char customerName[NAME_LEN];
+    float amount;
+    struct Purchase* prev;
+    struct Purchase* next;
+} Purchase;

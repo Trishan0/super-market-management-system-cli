@@ -3,6 +3,7 @@
 #define NAME_LEN 50
 
 #define MAX_STACK 100
+#define DESC_LEN 100
 
 typedef struct {
     int productId;
@@ -21,3 +22,5 @@ typedef struct Promo {
     char title[DESC_LEN];
     struct Promo* next;
 } Promo;
+
+#endif

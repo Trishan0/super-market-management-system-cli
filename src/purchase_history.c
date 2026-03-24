@@ -48,3 +48,25 @@ void addPurchaseRecord(void) {
 
     printf("Purchase record added successfully.\n");
 }
+
+void searchPurchaseRecord(void) {
+    int recordId;
+    printf("Enter record id to search: ");
+    scanf("%d", &recordId);
+
+    Purchase* p = findPurchaseByRecordId(recordId);
+    if (p == NULL) {
+        printf("\n  [!] Purchase record not found.\n");
+        return;
+    }
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------+\n");
+    printf("  |                 PURCHASE RECORD SEARCH RESULT               |\n");
+    printf("  +--------------+----------------------------------------------+\n");
+    printf("  | Record ID    | %-44d |\n", p->recordId);
+    printf("  | Customer ID  | %-44d |\n", p->customerId);
+    printf("  | Name         | %-44s |\n", p->customerName);
+    printf("  | Amount       | %-44.2f |\n", p->amount);
+    printf("  +--------------+----------------------------------------------+\n");
+}

@@ -112,3 +112,57 @@ void displaySalesRecords(void) {
 
     printf("  +------------+--------------------------------------+\n");
 }
+void totalDailySales(void) {
+    float total = 0.0f;
+    for (int i = 0; i < salesCount; i++) {
+        total += sales[i].amount;
+    }
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------+\n");
+    printf("  |                    SALES TOTAL SUMMARY                      |\n");
+    printf("  +--------------+----------------------------------------------+\n");
+    printf("  | Total Sales  | %-44.2f |\n", total);
+    printf("  +--------------+----------------------------------------------+\n");
+}
+
+void averageSales(void) {
+    if (salesCount == 0) {
+        printf("\n  [!] No sales records available.\n");
+        return;
+    }
+
+    float total = 0.0f;
+    for (int i = 0; i < salesCount; i++) {
+        total += sales[i].amount;
+    }
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------+\n");
+    printf("  |                   AVERAGE SALES SUMMARY                     |\n");
+    printf("  +--------------+----------------------------------------------+\n");
+    printf("  | Average      | %-44.2f |\n", total / salesCount);
+    printf("  +--------------+----------------------------------------------+\n");
+}
+
+void highestSaleDay(void) {
+    if (salesCount == 0) {
+        printf("\n  [!] No sales records available.\n");
+        return;
+    }
+
+    int maxIndex = 0;
+    for (int i = 1; i < salesCount; i++) {
+        if (sales[i].amount > sales[maxIndex].amount) {
+            maxIndex = i;
+        }
+    }
+
+    printf("\n");
+    printf("  +-------------------------------------------------------------+\n");
+    printf("  |                    HIGHEST SALE DAY                         |\n");
+    printf("  +--------------+----------------------------------------------+\n");
+    printf("  | Day Number   | %-44d |\n", sales[maxIndex].day);
+    printf("  | Amount       | %-44.2f |\n", sales[maxIndex].amount);
+    printf("  +--------------+----------------------------------------------+\n");
+}

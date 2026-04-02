@@ -12,5 +12,6 @@ void bubbleSortSalesByAmount(void);
 void totalDailySales(void);
 void averageSales(void);
 void highestSaleDay(void);
+void freeSales(void);
 
 #endif

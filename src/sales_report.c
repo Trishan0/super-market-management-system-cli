@@ -1,11 +1,22 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "types.h"
 #include "sales_report.h"
 
-static SaleRecord sales[MAX_SALES];
+#define INITIAL_CAPACITY 8
+
+static SaleRecord *sales = NULL;
 static int salesCount = 0;
+static int salesCapacity = 0;
 
 void initSales(void) {
+    salesCapacity = INITIAL_CAPACITY;
+    sales = malloc(salesCapacity * sizeof(SaleRecord));
+    if (!sales) {
+        fprintf(stderr, "Memory allocation failed.\n");
+        exit(1);
+    }
+
     salesCount = 5;
     sales[0] = (SaleRecord){1, 24500.00f};
     sales[1] = (SaleRecord){2, 19800.00f};
@@ -14,10 +25,23 @@ void initSales(void) {
     sales[4] = (SaleRecord){5, 17600.00f};
 }
 
+void freeSales(void) {
+    free(sales);
+    sales = NULL;
+    salesCount = 0;
+    salesCapacity = 0;
+}
+
 void addSalesRecord(void) {
-    if (salesCount >= MAX_SALES) {
-        printf("Sales storage is full.\n");
-        return;
+    if (salesCount >= salesCapacity) {
+        salesCapacity *= 2;
+        SaleRecord *temp = realloc(sales, salesCapacity * sizeof(SaleRecord));
+        if (!temp) {
+            fprintf(stderr, "Memory reallocation failed.\n");
+            return;
+        }
+        sales = temp;
+        printf("[i] Capacity expanded to %d.\n", salesCapacity);
     }
 
     printf("Enter day number: ");
@@ -112,6 +136,7 @@ void displaySalesRecords(void) {
 
     printf("  +------------+--------------------------------------+\n");
 }
+
 void totalDailySales(void) {
     float total = 0.0f;
     for (int i = 0; i < salesCount; i++) {
@@ -214,5 +239,3 @@ void salesReportMenu(void) {
         }
     } while (choice != 0);
 }
-
-

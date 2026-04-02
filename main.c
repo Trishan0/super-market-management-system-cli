@@ -64,6 +64,7 @@ int main(void) {
     } while (choice != 0);
 
     freeProducts();
-
+    freeSales();
+    
     return 0;
 }

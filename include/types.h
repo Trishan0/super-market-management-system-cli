@@ -1,7 +1,6 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#define MAX_PRODUCTS 200
 #define MAX_SALES 200
 #define MAX_QUEUE 100
 #define MAX_STACK 100

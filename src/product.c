@@ -1,24 +1,47 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "product.h"
 
-static Product products[MAX_PRODUCTS];
+#define INITIAL_CAPACITY 8
+
+static Product *products = NULL;
 static int productCount = 0;
+static int productCapacity = 0;
 
 void initProducts(void) {
-    productCount = 5;
+    productCapacity = INITIAL_CAPACITY;
+    products = malloc(productCapacity * sizeof(Product));
+    if (!products) {
+        fprintf(stderr, "Memory allocation failed.\n");
+        exit(1);
+    }
 
-    products[0] = (Product){101, "Rice 1kg", 240.00f, 30};
+    productCount = 5;
+    products[0] = (Product){101, "Rice 1kg",    240.00f, 30};
     products[1] = (Product){102, "Milk Powder", 1290.00f, 12};
-    products[2] = (Product){103, "Sugar 1kg", 260.00f, 25};
-    products[3] = (Product){104, "Tea Pack", 480.00f, 18};
-    products[4] = (Product){105, "Soap Bar", 150.00f, 40};
+    products[2] = (Product){103, "Sugar 1kg",   260.00f, 25};
+    products[3] = (Product){104, "Tea Pack",    480.00f, 18};
+    products[4] = (Product){105, "Soap Bar",    150.00f, 40};
+}
+
+void freeProducts(void) {
+    free(products);
+    products = NULL;
+    productCount = 0;
+    productCapacity = 0;
 }
 
 void addProduct(void) {
-    if (productCount >= MAX_PRODUCTS) {
-        printf("Product storage is full.\n");
-        return;
+    if (productCount >= productCapacity) {
+        productCapacity *= 2;
+        Product *temp = realloc(products, productCapacity * sizeof(Product));
+        if (!temp) {
+            fprintf(stderr, "Memory reallocation failed.\n");
+            return;
+        }
+        products = temp;
+        printf("[i] Capacity expanded to %d.\n", productCapacity);
     }
 
     Product p;

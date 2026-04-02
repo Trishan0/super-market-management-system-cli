@@ -63,5 +63,7 @@ int main(void) {
         }
     } while (choice != 0);
 
+    freeProducts();
+
     return 0;
 }

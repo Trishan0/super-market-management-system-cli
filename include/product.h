@@ -14,5 +14,6 @@ void displayProducts(void);
 void selectionSortProductsByPrice(void);
 void totalItemsInStock(void);
 void totalInventoryValue(void);
+void freeProducts(void);
 
 #endif
